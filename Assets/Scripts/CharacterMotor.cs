@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Motor : MonoBehaviour
+public class CharacterMotor : MonoBehaviour
 {
     public float maxSpeedChange = 2;
     public float speed = 10;
-    public float maxTurnSpeed = 15;
-    public float duration = 0.5f;
     Rigidbody rb;
     Vector3 targetVel;
     void Awake(){

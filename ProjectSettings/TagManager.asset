@@ -14,10 +14,10 @@ TagManager:
   - UI
   - 
   - 
-  - Seeker
-  - Runner
-  - 
-  - 
+  - Player
+  - Enemy
+  - PlayerBullet
+  - EnemyBullet
   - 
   - 
   - 
