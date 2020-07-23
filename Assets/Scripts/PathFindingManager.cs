@@ -17,7 +17,7 @@ public class PathFindingManager : MonoBehaviour
     public void SetPoints(){
         pointsOfIntrest.Sort(CompareByDistance);
     }
-    private static int CompareByDistance(Transform x, Transform y){
+    private int CompareByDistance(Transform x, Transform y){
         if (x == null){
             if (y == null){
                 // If x is null and y is null, they're
@@ -38,7 +38,7 @@ public class PathFindingManager : MonoBehaviour
                 return 1;
             }
             else{
-                if(x.position.magnitude > y.position.magnitude){
+                if((x.position - transform.position).magnitude > (y.position - transform.position).magnitude){
                     return 1;
                 }
                 else{

@@ -28,6 +28,7 @@ public class AIController : MonoBehaviour
     int closestPoint = 1;
     float lastRetreatTime = -1;
     float lastKiteTime = -1;
+    float pointChangeCal = 1;
     void Awake()
     {
         pathFinding = GetComponent<PathFindingManager>();
@@ -38,8 +39,10 @@ public class AIController : MonoBehaviour
     }
 
     void Start(){
+        
         pathFinding.SetPoints();
         pointsOfIntrest = pathFinding.pointsOfIntrest;
+        closestPoint = pointsOfIntrest.Count -1;
         point = pathFinding.pointsOfIntrest[pointsOfIntrest.Count - closestPoint];
         characters = new List<CharacterMotor>(FindObjectsOfType<CharacterMotor>());
         GetEnemies();
@@ -51,7 +54,7 @@ public class AIController : MonoBehaviour
         }
     }
 
-    private static int CompareByDistance(Transform x, Transform y){
+    private int CompareByDistance(Transform x, Transform y){
         if (x == null){
             if (y == null){
                 // If x is null and y is null, they're
@@ -73,7 +76,7 @@ public class AIController : MonoBehaviour
             }
             else{
                 if(x.gameObject.activeSelf && y.gameObject.activeSelf){
-                    if(x.position.magnitude > y.position.magnitude){
+                    if((x.position - transform.position).magnitude > (y.position - transform.position).magnitude){
                         return 1;
                     }
                     else{
@@ -83,8 +86,11 @@ public class AIController : MonoBehaviour
                 else if(x.gameObject.activeSelf && !y.gameObject.activeSelf){
                     return 1;
                 }
-                else{
+                else if(!x.gameObject.activeSelf && y.gameObject.activeSelf){
                     return -1;
+                }
+                else{
+                    return 0;
                 }
             }
         }
@@ -92,9 +98,10 @@ public class AIController : MonoBehaviour
 
     void Update(){
 
-        if((point.position - transform.position).magnitude < 3){
-            closestPoint++;
-            if(closestPoint > pointsOfIntrest.Count) closestPoint = 1;
+        pointChangeCal = Random.Range(1,10);
+        if((point.position - transform.position).magnitude < pointChangeCal){
+            closestPoint--;
+            if(closestPoint <= 1) closestPoint = pointsOfIntrest.Count - 1;
             point = pointsOfIntrest[pointsOfIntrest.Count - closestPoint];
         }
 
@@ -105,14 +112,13 @@ public class AIController : MonoBehaviour
             }
             else if(closestEnemy != null){
                 Vector3 enemyDiff = closestEnemy.position - transform.position;
-                if(enemyDiff.magnitude < 30){
-                    if(enemyDiff.magnitude < 10){
-                        lastKiteTime = Time.time;
-                        movementState = AIState.Kite;
-                    }
-                    else if(Time.time - lastKiteTime > kiteDuration){
-                        movementState = AIState.Attacking;
-                    }
+                if(enemyDiff.magnitude < 10 && Time.time - lastKiteTime > kiteDuration){
+                    movementState = AIState.Kite;
+                    gun.Fire(transform.forward);
+                    motor.Turn(enemyDiff);
+                }
+                else if(enemyDiff.magnitude < 20){
+                    movementState = AIState.Attacking;
                     gun.Fire(transform.forward);
                     motor.Turn(enemyDiff);
                 }
@@ -122,7 +128,6 @@ public class AIController : MonoBehaviour
             }
         }
         
-        
         switch(movementState){
             case AIState.ToPoint:
                 if(point == null) break;
@@ -131,6 +136,7 @@ public class AIController : MonoBehaviour
                 break;
             case AIState.Attacking:
                 if(closestEnemy != null){
+                    lastKiteTime = Time.time;
                     Vector3 attackDir = closestEnemy.position - transform.position;
                     motor.Move(attackDir);
                 }
@@ -152,7 +158,10 @@ public class AIController : MonoBehaviour
     }
     void LateUpdate(){
         enemies.Sort(CompareByDistance);
-        Transform t = enemies[enemies.Count - 1];
-        closestEnemy = t.gameObject.activeSelf ? t : null;
+        if(enemies.Count > 0){
+            Transform t = enemies[0];
+            closestEnemy = t.gameObject.activeSelf ? t : null;
+            if(closestEnemy == null) enemies.RemoveAt(0);
+        }
     }
 }
