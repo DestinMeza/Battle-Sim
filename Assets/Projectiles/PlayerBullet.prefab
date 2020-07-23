@@ -112,7 +112,7 @@ MonoBehaviour:
   maxSpeedChange: 1
   dieOffScreen: 0
   dieOnCollision: 1
-  speed: 10
+  speed: 15
   ignoreTags:
   - Ignore
 --- !u!54 &6420642426000149087

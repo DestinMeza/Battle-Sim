@@ -43,13 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6472614990de3e646bf69f7a973fe4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletName: Bullet
+  bulletName: EnemyBullet
   inheritVel: 1
   ammoDecay: 1
   maxAmmo: 10
-  fireRate: 0.1
-  reloadTime: 5
-  accuracy: 0.99
+  fireRate: 1
+  reloadTime: 2
+  accuracy: 0.97
   useReload: 0
   forceType: 0
   forceType2D: 0
@@ -81,7 +81,7 @@ Transform:
   m_GameObject: {fileID: 7766438514761439172}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_Children:
   - {fileID: 7766438514248016629}
   m_Father: {fileID: 7766438514878646034}
@@ -212,6 +212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f3e8c9a5712094385f1177298b96f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  regenTick: 1
+  regenAmount: 1
   maxHealth: 3
   health: 0
   scoreValue: 5
@@ -219,6 +221,7 @@ MonoBehaviour:
   onDeathSetInactive: 1
   healOnEnable: 1
   invulnerble: 0
+  useRegen: 1
 --- !u!114 &4375347543828659625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,7 +249,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementState: 0
-  closestPoint: 0
+  retreatDuration: 3
+  kiteDuration: 2
 --- !u!54 &5681664705306000989
 Rigidbody:
   m_ObjectHideFlags: 0
