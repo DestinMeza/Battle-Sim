@@ -115,6 +115,9 @@ public class AIController : MonoBehaviour
             if(!CheckIfExist(hit.transform) && hit.transform.gameObject.activeSelf){
                 this.contacts.Add(hit.transform);
             }
+            else if(CheckIfExist(hit.transform) && !hit.transform.gameObject.activeSelf){
+                this.contacts.Remove(hit.transform);
+            }
         }
         if(contacts.Length == 0) this.contacts.Clear();
         if(this.contacts.Count > 0) closestEnemy = this.contacts[0];
