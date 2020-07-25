@@ -234,9 +234,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4184c8effd76d7942995423bc971ebec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
   movementState: 0
   retreatDuration: 3
   kiteDuration: 2
+  range: 15
 --- !u!114 &7293788678115984443
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9264,7 +9264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layer:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
   keyToRotate: 306
   panSpeed: 10
   rotateSpeed: 15
