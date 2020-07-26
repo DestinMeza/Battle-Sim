@@ -124,6 +124,9 @@ public class AIController : MonoBehaviour
         else{
             closestEnemy = null;
         }
+        for(int i = 0; i < this.contacts.Count; i++){
+            if(this.contacts[i].gameObject.activeSelf) this.contacts.Remove(this.contacts[i]);
+        }
     }
 
     bool CheckIfExist(Transform t){
